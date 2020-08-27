@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from "react"
-import { ThemeProvider, ColorModeProvider, CSSReset } from "@chakra-ui/core"
-import theme from "./theme"
+import React, { FunctionComponent } from "react";
+import { ThemeProvider, ColorModeProvider, CSSReset } from "@chakra-ui/core";
+import theme from "./theme";
 
 const ThemeContainer: FunctionComponent = ({ children }) => {
   return (
@@ -10,7 +10,7 @@ const ThemeContainer: FunctionComponent = ({ children }) => {
         {children}
       </ColorModeProvider>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default ThemeContainer
+export default ThemeContainer;
