@@ -8,7 +8,7 @@ A simple panel to gather your Marketplace data from Ideris Hub and export it int
 
 ### Built with :gem:
 
-- **React.js** | **Typescript** | **Chakra UI** | **Node.js** |
+- **React.js** | **Typescript** | **Chakra UI** |
 
 ### Installation :construction_worker:
 

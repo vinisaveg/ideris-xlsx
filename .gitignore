@@ -25,3 +25,5 @@ yarn-error.log*
 *.log
 
 src/tests/
+
+src/environment/
