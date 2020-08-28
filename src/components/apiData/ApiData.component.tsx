@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Heading, Grid, Input, Button } from "@chakra-ui/core";
+import { Heading, Grid, Input, Button, useToast } from "@chakra-ui/core";
 
 interface ApiDataProps {
   handleGenerateToken: Function;
@@ -7,9 +7,22 @@ interface ApiDataProps {
 
 const ApiData: React.FC<ApiDataProps> = ({ handleGenerateToken }) => {
   const [token, setToken] = useState("");
+  const toast = useToast();
 
   const handleToken = () => {
-    handleGenerateToken(token);
+    if (token) {
+      handleGenerateToken(token);
+    } else {
+      toast({
+        title: "Chave Inválida!",
+        description: "Insira a sua Chave da API para gerar o Token",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+
+    setToken("");
   };
 
   return (
@@ -25,6 +38,7 @@ const ApiData: React.FC<ApiDataProps> = ({ handleGenerateToken }) => {
           onChange={(e: any) => setToken(e.target.value)}
           type="password"
           placeholder="Chave da API"
+          value={token}
         />
         <Button onClick={() => handleToken()} variantColor="purple">
           Gerar Token

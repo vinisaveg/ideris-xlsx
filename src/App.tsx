@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ThemeContainer from "./styles/themes/ThemeContainer";
-import { Flex, Button } from "@chakra-ui/core";
+import { Flex } from "@chakra-ui/core";
 
 import Header from "./components/header/Header.component";
 import ApiData from "./components/apiData/ApiData.component";
@@ -10,11 +10,21 @@ import OrdersList from "./components/ordersList/OrdersList.component";
 
 import { api } from "./api/api";
 
+import { jsonToSheet } from "./services/JsonToSheet";
+
 function App() {
   const [token, setToken] = useState("");
+  const [orders, setOrders] = useState([]);
 
   const generateToken = (token: string) => {
-    saveToken(token);
+    api
+      .post("/Login", {
+        login_token: token,
+      })
+      .then((response) => saveToken(response.data))
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const saveToken = (token: string) => {
@@ -22,12 +32,20 @@ function App() {
     localStorage.setItem("token", token);
   };
 
-  const getAuthToken = () => {
-    api
-      .post("/Login", {
-        login_token: token,
-      })
-      .then((response) => console.log(response.data));
+  const setOrderById = (order: []) => {
+    setOrders(order);
+  };
+
+  const setOrderByFilters = (orders: []) => {
+    setOrders(orders);
+  };
+
+  const cleanOrders = () => {
+    setOrders([]);
+  };
+
+  const generateXLSX = () => {
+    jsonToSheet(orders);
   };
 
   useEffect(() => {
@@ -42,22 +60,27 @@ function App() {
     <ThemeContainer>
       <Header />
 
-      <Button onClick={() => getAuthToken()}>Get Token Request</Button>
-
       <Flex
         justifyContent="center"
         flexDirection="column"
-        paddingY="20"
+        paddingY="10"
         paddingX={["2", "10", "30", "40"]}
         className="app-wrapper"
       >
         <ApiData handleGenerateToken={generateToken} />
 
-        <SearchOrders />
+        <SearchOrders
+          token={token}
+          handleSetOrdersByFilters={setOrderByFilters}
+        />
 
-        <SearchOrderById />
+        <SearchOrderById token={token} handleSetOrderById={setOrderById} />
 
-        <OrdersList />
+        <OrdersList
+          orders={orders}
+          handleCleanOrders={cleanOrders}
+          handleGenerateXLSX={generateXLSX}
+        />
       </Flex>
     </ThemeContainer>
   );

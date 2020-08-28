@@ -1,9 +1,18 @@
 import React, { FunctionComponent } from "react";
-import { Flex, Button } from "@chakra-ui/core";
+import { Flex, Button, Text } from "@chakra-ui/core";
 
 import Order from "../order/Order.component";
 
-const OrdersList: FunctionComponent = () => {
+interface OrdersListProps {
+  orders: Array<object>;
+  handleCleanOrders: Function
+  handleGenerateXLSX: Function
+}
+
+const OrdersList: FunctionComponent<OrdersListProps> = ({ ...props }) => {
+
+  const {orders, handleCleanOrders, handleGenerateXLSX} = props
+
   return (
     <>
       <Flex
@@ -15,19 +24,31 @@ const OrdersList: FunctionComponent = () => {
         overflow="scroll"
         bg="gray.700"
       >
-        <Order />
-        <Order />
-        <Order />
-        <Order />
+        {orders.map((order: any) => (
+          <Order
+            key={order.id}
+            id={order.id}
+            nomeContaMarketplace={order.idContaMarketplace}
+            data={order.data}
+            caminhoImagemItem={order.Item ? order.Item[0].caminhoImagemItem : order.imagemPedidoItem}
+            status={order.status}
+            compradorPrimeiroNome={order.compradorPrimeiroNome}
+            enderecoEntregaCep={order.enderecoEntregaCep}
+          />
+        ))}
 
-        {/* <span>Faça uma busca</span> */}
+        {orders.length > 0 ? null : (
+          <Text alignSelf="center" mt="100px">
+            Faça uma busca
+          </Text>
+        )}
       </Flex>
 
       <Flex justifyContent="flex-end" alignItems="center" mt="5">
-        <Button variantColor="yellow" mr="5">
+        <Button onClick={() => handleCleanOrders()} variantColor="yellow" mr="5">
           Limpar
         </Button>
-        <Button variantColor="green">Gerar Excel</Button>
+        <Button onClick={() => handleGenerateXLSX()} variantColor="green">Gerar Excel</Button>
       </Flex>
     </>
   );
