@@ -49,6 +49,6 @@ https://ideris-xlsx.herokuapp.com/
 
 ### Issues :bug:
 
-You can gently and respectful create a PR to this project, I'd love to review it and merge it :+1:
+You can gently and respectfully create a PR to this project, I'd love to review it and merge it :+1:
 
 Enjoy! :relaxed:
