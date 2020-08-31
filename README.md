@@ -10,7 +10,7 @@ A simple panel to gather your Marketplace data from Ideris Hub and export it int
 
 * Search orders with a filter 
 * Search an order by ID
-* Generate an Excel Sheet with the order data
+* Generate an Excel Sheet with the requested data
 
 ### Built with :computer:
 
